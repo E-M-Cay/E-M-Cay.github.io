@@ -72,15 +72,13 @@ function computeDamagePoint(attacker) {
 
     let rawDamage = throwDices(3, 6);
     let damage;
-    let knightModifier;
-    let mageModifer;
+    let knightModifier = 1 - throwDices(1, 10)/100;
+    let mageModifer = 1 + throwDices(1, 10)/100;
 
     //console.log(rawDamage);
     let modifier;
     if (game.gameLevel === LEVEL_EASY) {
         modifier = throwDices(2, 6);
-        mageModifer = 1 + throwDices(1, 10)/100;
-        knightModifier = 1 - throwDices(1, 10)/100;
         //console.log(modifier);
         switch (attacker) {
             case PLAYER:
@@ -112,14 +110,14 @@ function computeDamagePoint(attacker) {
     } else {
         damage = rawDamage;
     }
-    if (game.class === CLASS_MAGE && attacker === PLAYER) {
-        damage = Math.ceil(damage * mageModifer);
-        //console.log(damage);
-    } else if (game.class === CLASS_KNIGHT && attacker === DRAGON) {
-        damage = Math.floor(damage * knightModifier);
-        console.log(damage);
+     if (game.class === CLASS_MAGE && attacker === PLAYER) {
+       damage = (Math.ceil(damage * mageModifer));
+       //console.log(damage)
+     console.log();
+   } else if (game.class === CLASS_KNIGHT && attacker === DRAGON) {
+      damage = (Math.floor(damage * knightModifier));
+       //console.log(damage;
     }
-
 
     return damage;
 
@@ -240,6 +238,8 @@ function showGameState() {
     stateDiv.classList.add("game-state");
     StateFigPla.classList.add("game-state_player");
     StateFigDra.classList.add("game-state_player");
+    //stateCaptionDra.innerHTML = `${game.dragonHP} PV`
+    //stateCaptionPla.innerHTML = `${game.playerHP} PV`
     stateCaptionPla.innerHTML = `<progress max=${game.startPlayerHP} value=${game.playerHP}></progress> ${game.playerHP} PV`
     stateCaptionDra.innerHTML = `<progress max=${game.startDragonHP} value=${game.dragonHP}></progress> ${game.dragonHP} PV`
 }
@@ -263,7 +263,7 @@ function showGameWinner() {
     if (game.dragonHP === 0) {
         footCaption.innerHTML = "Vous avez vaincu le dragon avec bravoure !"
         footImg.setAttribute("src", "./images/knight-winner.png");
-    } else {
+    } else if (game.playerHP === 0) {
         footCaption.innerHTML = "Vous avez perdu le combat, le dragon vous a carbonisé !"
         footImg.setAttribute("src", "./images/dragon-winner.png");
     }
