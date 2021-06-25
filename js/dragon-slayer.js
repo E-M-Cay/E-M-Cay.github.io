@@ -29,16 +29,27 @@ let gameDiv = document.createElement("div");
  //@returns {string} - DRAGON|PLAYER
  
 function getAttacker() {
-   
     let dragonInit = throwDices(10, 6);
-    let playerInit = throwDices(10, 6);
-    let thiefModifier = throwDices(1, 6);
-
-    while (dragonInit === playerInit) {
-        dragonInit = throwDices(10, 6);
+    let thiefModifier = 1 + throwDices(1, 6)/100;
+    let playerInit
+    if (game.class === CLASS_THIEF) {
+        playerInit = Math.ceil(throwDices(10, 6) * thiefModifier);
+        console.log(playerInit);
+    } else {
         playerInit = throwDices(10, 6);
     }
-    //if (game.class === CLASS_THIEF) {player }
+    
+    
+    while (dragonInit === playerInit) {
+        if (game.class === CLASS_THIEF) {
+            playerInit = Math.ceil(throwDices(10, 6) * thiefModifier);
+            //console.log(playerInit);
+        } else {
+            playerInit = throwDices(10, 6);
+        }
+        ;
+    }
+    
     //console.log(`player init: ${playerInit}, dragon init: ${dragonInit}`)
     if (dragonInit < playerInit) {
         //console.log("attacker: player");
@@ -61,12 +72,12 @@ function computeDamagePoint(attacker) {
 
     let rawDamage = throwDices(3, 6);
     let damage;
-    let thiefModifer;
+    let mageModifer;
     //console.log(rawDamage);
     let modifier;
     if (game.gameLevel === LEVEL_EASY) {
         modifier = throwDices(2, 6);
-        thiefModifer = throwDices(1, 6);
+        mageModifer = throwDices(1, 6);
         //console.log(modifier);
         switch (attacker) {
             case PLAYER:
