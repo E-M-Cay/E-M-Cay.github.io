@@ -72,6 +72,7 @@ function computeDamagePoint(attacker) {
 
     let rawDamage = throwDices(3, 6);
     let damage;
+    let knightModifier;
     let mageModifer;
 
     //console.log(rawDamage);
@@ -79,6 +80,7 @@ function computeDamagePoint(attacker) {
     if (game.gameLevel === LEVEL_EASY) {
         modifier = throwDices(2, 6);
         mageModifer = 1 + throwDices(1, 10)/100;
+        knightModifier = 1 - throwDices(1, 10)/100;
         //console.log(modifier);
         switch (attacker) {
             case PLAYER:
@@ -113,6 +115,9 @@ function computeDamagePoint(attacker) {
     if (game.class === CLASS_MAGE && attacker === PLAYER) {
         damage = Math.ceil(damage * mageModifer);
         //console.log(damage);
+    } else if (game.class === CLASS_KNIGHT && attacker === DRAGON) {
+        damage = Math.floor(damage * knightModifier);
+        console.log(damage);
     }
 
 
