@@ -233,15 +233,15 @@ function showGameState() {
     StateFigDra.appendChild(stateCaptionDra);
     stateDiv.appendChild(StateFigDra);
     gameDiv.appendChild(stateDiv);
-    stateImgPla.setAttribute("src", "./images/knight.png")
+    stateImgPla.setAttribute("src", "./images/knight.png");
     if (game.playerHP < 0.3 * game.startPlayerHP) { stateImgPla.setAttribute("src", "./images/knight-wounded.png") }
-    stateImgDra.setAttribute("src", "./images/dragon.png")
+    stateImgDra.setAttribute("src", "./images/dragon.png");
     if (game.dragonHP < 0.3 * game.startDragonHP) { stateImgDra.setAttribute("src", "./images/dragon-wounded.png") }
     stateDiv.classList.add("game-state");
-    StateFigPla.classList.add("game-state_player")
-    StateFigDra.classList.add("game-state_player")
-    stateCaptionPla.innerHTML = `${game.playerHP} PV`;
-    stateCaptionDra.innerHTML = `${game.dragonHP} PV`;  
+    StateFigPla.classList.add("game-state_player");
+    StateFigDra.classList.add("game-state_player");
+    stateCaptionPla.innerHTML = `<progress max=${game.startPlayerHP} value=${game.playerHP}></progress> ${game.playerHP} PV`
+    stateCaptionDra.innerHTML = `<progress max=${game.startDragonHP} value=${game.dragonHP}></progress> ${game.dragonHP} PV`
 }
 
 
