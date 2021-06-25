@@ -73,20 +73,17 @@ function computeDamagePoint(attacker) {
     let rawDamage = throwDices(3, 6);
     let damage;
     let mageModifer;
+
     //console.log(rawDamage);
     let modifier;
     if (game.gameLevel === LEVEL_EASY) {
         modifier = throwDices(2, 6);
-        mageModifer = throwDices(1, 6);
+        mageModifer = 1 + throwDices(1, 10)/100;
         //console.log(modifier);
         switch (attacker) {
             case PLAYER:
                 damage = Math.ceil(rawDamage * (1 + (modifier / 100)));
-                if (game.class === CLASS_THIEF) {
-                    Math.ceil(rawDamage * (1 + (modifier / 100)));
-                } else {
                     damage = Math.ceil(rawDamage * (1 + (modifier / 100)) * (1));
-                }
                 break;
             case DRAGON:
                 //console.log("test");
@@ -112,6 +109,10 @@ function computeDamagePoint(attacker) {
         }
     } else {
         damage = rawDamage;
+    }
+    if (game.class === CLASS_MAGE) {
+        damage = Math.ceil(damage * mageModifer);
+        console.log(damage);
     }
 
 
@@ -235,10 +236,9 @@ function showGameState() {
     StateFigPla.classList.add("game-state_player")
     StateFigDra.classList.add("game-state_player")
     stateCaptionPla.innerHTML = `${game.playerHP} PV`;
-    stateCaptionDra.innerHTML = `${game.dragonHP} PV`;
-
-    
+    stateCaptionDra.innerHTML = `${game.dragonHP} PV`;  
 }
+
 
 
 function showGameWinner() {
