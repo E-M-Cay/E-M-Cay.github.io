@@ -25,12 +25,11 @@ let gameDiv = document.createElement("div");
 /**/
 
 
-/* Détermine qui du joueur ou du dragon prend l'initiative et attaque
- * @returns {string} - DRAGON|PLAYER
- */
+
+ //@returns {string} - DRAGON|PLAYER
+ 
 function getAttacker() {
-    // On lance 10D6 pour le joueur et pour le dragon
-    // On compare les scores d'initiatives et on retourne le résultat
+   
     let dragonInit = throwDices(10, 6);
     let playerInit = throwDices(10, 6);
     let thiefModifier = throwDices(1, 6);
@@ -48,7 +47,7 @@ function getAttacker() {
         //console.log("attacker: dragon");
         return DRAGON;
     }
-    //on retourne l'attaquant
+   
 }
 
 
@@ -58,7 +57,7 @@ function getAttacker() {
  * @returns {number} - le nombre de points de dommages
  */
 function computeDamagePoint(attacker) {
-    // On tire 3D6 pour le calcul des points de dommages causés par le dragon
+
 
     let rawDamage = throwDices(3, 6);
     let damage;
@@ -132,50 +131,15 @@ function gameLoop() {
         showGameState();
         game.round++;
     }
-
-    // Qui va attaquer lors de ce tour de jeu ?
-
-    // Combien de dommages infligent l'assaillant = PV que va perdre le personnage attaqué
-
-    // Est-ce que le dragon est plus rapide que le joueur ? (condition)
-
-    // Diminution des points de vie du joueur.
-
-    //sinon
-
-    // Diminution des points de vie du dragon.
-
-
-    // Affichage du journal : que s'est-il passé ?
-
-    // Affichage de l'état du jeu
-
-    // On passe au tour suivant.
 }
-/**
- * Initialise les paramètres du jeu
- *  Création d'un objet permettant de stocker les données du jeu
- *      ->  les données seront stockées dans une propriété de l'objet,
- *          on évite ainsi de manipuler des variables globales à l'intérieur des fonctions qui font évoluer les valeurs
- *
- * Quelles sont les données necessaires tout au long du jeu (pour chaque round)
- *    -  N° du round (affichage)
- *    -  Niveau de difficulté (calcul des dommages)
- *    -  Points de vie du joueur ( affichage + fin de jeu )
- *    -  Points de vie du dragon ( affichage + fin de jeu )
- */
+
 function initializeGame() {
-    // Initialisation de la variable globale du jeu. (qui sera un objet) qu'on initialise au premier round
     game = { gameLevel: 2, playerHP: 0, dragonHP: 0, round: 1, startDragonHP: 0, startPlayerHP: 0, class: 2 }
 
-    // Choix du niveau du jeu (que l'on stock dans l'objet)
+    
     game.gameLevel = requestInteger("Veuillez choisir un niveau de difficulté entre : 1 (facile), 2 (normal) et 3 (difficile)", 1, 3);
     game.class = requestInteger("Veuillez choisir une classe entre : 1 (Voleur), 2 (Chevalier) et 3 (Mage)", 1, 3);
-    /*
-    * Détermination des points de vie de départ selon le niveau de difficulté. (switch)
-    * 10 tirages, la pondération se joue sur le nombre de faces
-    *    -> plus il y a de faces, plus le nombre tiré peut-être élévé
-    */
+    
     switch (game.gameLevel) {
         case 1:
             game.playerHP = 100 + throwDices(10, 10);
@@ -199,7 +163,7 @@ function initializeGame() {
     }
     game.startPlayerHP = game.playerHP;
     game.startDragonHP = game.dragonHP;
-    /*détermine les points de vie du joueur et du dragon*/
+    
     let writeTitle = document.createElement("h2");
     writeTitle.innerHTML = "Que la fête commence !!";
     main.appendChild(gameDiv);
@@ -207,7 +171,6 @@ function initializeGame() {
     gameDiv.classList.add('game');
     showGameState();
     //console.log(game);
-    //Etat du joueur et du dragon
 }
 
 //console.log(computeDamagePoint(PLAYER));
@@ -233,30 +196,10 @@ function showGameLog(attacker, damagePoints) {
     } else (alert('Error with attacker in showgamelog'));
 
 
-    // Si c'est le dragon qui attaque...
-
-
-    //sinon le player
-
-    // Affichage des informations du tour dans le document HTML celui de l'attaq
-
-    //numéro du round titre 3
-
-    //figure
-
-    //img
-
-    //figcaption
-
-    //fermeture figcaption
-
-    //fermeture figure
-
+  
 }
 
-/**
- * Affichage de l'état du jeu, c'est-à-dire des points de vie respectifs des deux combattants
- */
+
 function showGameState() {
 
     let stateDiv = document.createElement("div");
@@ -283,12 +226,10 @@ function showGameState() {
     stateCaptionPla.innerHTML = `${game.playerHP} PV`;
     stateCaptionDra.innerHTML = `${game.dragonHP} PV`;
 
-    /*----------------*/
+    
 }
 
-/**
- * Affichage du vainqueur
- */
+
 function showGameWinner() {
     let footer = document.createElement("footer");
     let footTitle = document.createElement("h3");
@@ -312,9 +253,7 @@ function showGameWinner() {
     }
 
 }
-/**
- * Fonction principale du jeu qui démarre la partie
- */
+
 function startGame() {
     // Etape 1 : initialisation du jeu
     initializeGame();
