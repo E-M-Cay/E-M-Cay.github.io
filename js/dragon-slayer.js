@@ -34,7 +34,7 @@ function getAttacker() {
     let playerInit
     if (game.class === CLASS_THIEF) {
         playerInit = Math.ceil(throwDices(10, 6) * thiefModifier);
-        console.log(playerInit);
+        //console.log(playerInit);
     } else {
         playerInit = throwDices(10, 6);
     }
@@ -110,9 +110,9 @@ function computeDamagePoint(attacker) {
     } else {
         damage = rawDamage;
     }
-    if (game.class === CLASS_MAGE) {
+    if (game.class === CLASS_MAGE && attacker === PLAYER) {
         damage = Math.ceil(damage * mageModifer);
-        console.log(damage);
+        //console.log(damage);
     }
 
 
